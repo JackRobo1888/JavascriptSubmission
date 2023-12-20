@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Maintainer</title>
+    <link rel="icon" type="image/x-icon" href="Resources/Logo.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script> 
+    <script src="https://assets.babylonjs.com/generated/Assets.js"></script> 
+    <script src="https://cdn.babylonjs.com/ammo.js"></script> 
+    <script src="https://cdn.babylonjs.com/cannon.js"></script> 
+    <script src="https://cdn.babylonjs.com/Oimo.js"></script> 
+    <script src="https://cdn.babylonjs.com/earcut.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/babylon.js"></script> 
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script> 
+    <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+    <script type="text/javascript" src="JS/Library.js"></script>
+    <script type="text/javascript" src="JS/element04.js"></script>
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <div class="container">
+            
+    <nav class="navbar navbar-expand-md bg-faded sticky-top">
+        <a class="navbar-brand" href="#"><img class="logo" src="Resources/Logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="w-100">
+           <div class="navbar-collapse collapse">
+               <ul class="navbar-nav ml-auto">
+                   <li class="nav-item">
+                       <a class="nav-link" href="index.html">Home</a>
+                   </li>
+                   <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="elementsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Elements
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="elementsDropdown">
+                        <a class="dropdown-item" href="element01.html">Element 1</a>
+                        <a class="dropdown-item" href="element02.html">Element 2</a>
+                        <a class="dropdown-item" href="element03.html">Element 3</a>
+                        <a class="dropdown-item" href="element04.html">Element 4</a>
+                        <a class="dropdown-item" href="element05.html">Element 5</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="game.html">Game</a>
+                </li>
+               </ul>
+           </div>
+        </div>
+    </nav>
+        </div>
+    </header>
+    <canvas class="gameWindow" id="renderCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById("renderCanvas");
+            var engine = new BABYLON.Engine(canvas, true);
+            var scene = new BABYLON.Scene(engine);
+
+            var camera = new BABYLON.ArcRotateCamera("camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+    camera.attachControl(canvas, true);
+
+
+
+                var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+                light.intensity = 0.7;
+
+    var gui = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+ var backButton = BABYLON.GUI.Button.CreateSimpleButton("backButton", "Back");
+var startButton = BABYLON.GUI.Button.CreateSimpleButton("startButton", "Start Scene");
+startButton.width = "150px";
+startButton.height = "40px";
+startButton.color = "white";
+startButton.background = "green";
+startButton.isPointerBlocker = true;
+startButton.onPointerUpObservable.add(function () {
+    gui.removeControl(startButton);
+    var background = new BABYLON.Layer("background", "Resources/bg-sunset.png", scene);
+    var box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
+        box.position = new BABYLON.Vector3(0, 1, 5);
+        camera.target = box.position;
+
+         
+        backButton.width = "150px";
+        backButton.height = "40px";
+        backButton.top = "-200px";
+        backButton.color = "white";
+        backButton.background = "red";
+        backButton.onPointerUpObservable.add(function () {
+            box.dispose();
+            camera.target = BABYLON.Vector3.Zero();
+
+            gui.addControl(startButton);
+            gui.addControl(audioIcon);
+            gui.removeControl(backButton);
+            background.dispose();
+        });
+  
+        gui.addControl(backButton);
+});
+scene.onPointerDown = function () {
+        backButton.background = "green";
+
+        
+      };
+var isAudioMuted = true;
+var audioIcon = new BABYLON.GUI.Image("audioIcon", "Resources/images/mute.png");
+audioIcon.width = "40px";
+audioIcon.height = "40px";
+audioIcon.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+  audioIcon.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+     audioIcon.top = "10px";
+  audioIcon.left = "-10px";
+  audioIcon.isPointerBlocker = true;
+  
+  var audio = new Audio("Resources/Audio/background.mp3");
+
+audioIcon.onPointerUpObservable.add(function () {
+    isAudioMuted = !isAudioMuted;
+    if (isAudioMuted) {
+        audio.pause();
+        audioIcon.source = "Resources/images/mute.png";
+        console.log("Audio muted!");
+    } else {
+        audio.play();
+        audioIcon.source = "Resources/images/audio_icon.png";
+        console.log("Audio unmuted!");
+    }
+});
+
+gui.addControl(startButton);
+gui.addControl(audioIcon);
+
+            engine.runRenderLoop(function () {
+            scene.render();
+            });
+
+            window.addEventListener("resize", function () {
+            engine.resize();
+            });
+    </script>
+
+</body>

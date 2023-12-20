@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Documentation</title>
+    <link rel="icon" type="image/x-icon" href="Resources/Logo.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <header class="bg-dark text-white text-center py-3">
+        <div class="container">
+            
+    <nav class="navbar navbar-expand-md bg-faded sticky-top">
+        <a class="navbar-brand" href="#"><img class="logo" src="Resources/Logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="w-100">
+           <div class="navbar-collapse collapse">
+               <ul class="navbar-nav ml-auto">
+                   <li class="nav-item">
+                       <a class="nav-link" href="index.html">Home</a>
+                   </li>
+                   <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="elementsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Elements
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="elementsDropdown">
+                        <a class="dropdown-item" href="element01.html">Element 1</a>
+                        <a class="dropdown-item" href="element02.html">Element 2</a>
+                        <a class="dropdown-item" href="element03.html">Element 3</a>
+                        <a class="dropdown-item" href="element04.html">Element 4</a>
+                        <a class="dropdown-item" href="element05.html">Element 5</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="doc.html">Documentation</a>
+                </li>
+               </ul>
+           </div>
+        </div>
+    </nav>
+        </div>
+    </header>
+
+    <section>
+        <h2>Introduction</h2>
+        <p>
+            This document provides detailed documentation for the fifth scene element, which involves the creation of two interactive scenes switchable by GUI or in response to scene events.
+        </p>
+    </section>
+
+    <section>
+        <h2>Scene Setup</h2>
+        <p>
+            The scene is set up using Babylon.js, a powerful 3D engine. Below is the basic scene setup code:
+        </p>
+
+        <pre>
+<code>
+// Babylon.js scene setup
+var canvas = document.getElementById("renderCanvas");
+var engine = new BABYLON.Engine(canvas, true);
+var scene = new BABYLON.Scene(engine);
+// ... (other scene setup code)
+</code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>Scene Switching Logic</h2>
+        <p>
+            The switching between scenes is achieved through a GUI button or in response to scene events. Here is the relevant code snippet:
+        </p>
+
+        <pre>
+<code>
+// Scene switching logic
+var switchButton = BABYLON.GUI.Button.CreateSimpleButton("switchButton", "Switch Scene");
+switchButton.width = "150px";
+switchButton.height = "40px";
+switchButton.color = "white";
+switchButton.background = "blue";
+switchButton.onPointerUpObservable.add(function () {
+    switchScene();
+});
+advancedTexture.addControl(switchButton);
+
+function switchScene() {
+    // Logic to switch between scenes
+    // For example, you can dispose of the current scene and initialize the next scene
+    disposeCurrentScene();
+    initializeNextScene();
+}
+</code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>Scene Elements</h2>
+        <h3>Scene Element 1: Basic Shapes, Lighting, Textures, Shadows, and Motion</h3>
+        <pre>
+<code>
+// Create basic shapes
+var box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
+var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
+
+// Apply textures and materials
+var boxMaterial = new BABYLON.StandardMaterial("boxMaterial", scene);
+boxMaterial.diffuseTexture = new BABYLON.Texture("textures/boxTexture.jpg", scene);
+box.material = boxMaterial;
+
+var sphereMaterial = new BABYLON.StandardMaterial("sphereMaterial", scene);
+sphereMaterial.diffuseTexture = new BABYLON.Texture("textures/sphereTexture.jpg", scene);
+sphere.material = sphereMaterial;
+
+// Shadows
+var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+shadowGenerator.addShadowCaster(box);
+shadowGenerator.addShadowCaster(sphere);
+
+// Animation
+var animationBox = new BABYLON.Animation("boxAnimation", "rotation.y", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+var keysBox = [];
+keysBox.push({ frame: 0, value: 0 });
+keysBox.push({ frame: 100, value: Math.PI * 2 });
+animationBox.setKeys(keysBox);
+box.animations = [animationBox];
+
+// ... (additional code for this scene element)
+</code>
+        </pre>
+
+    </section>
+
+    <section>
+        <h2>Conclusion</h2>
+        <p>
+            In conclusion, Scene 5 successfully demonstrates the ability to switch between two interactive scenes, showcasing creativity and game-like aspects. The code is organized and follows best practices for Babylon.js development.
+        </p>
+    </section>
+
+</body>
+
+</html>

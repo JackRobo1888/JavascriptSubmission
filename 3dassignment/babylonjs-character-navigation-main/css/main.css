@@ -1,0 +1,151 @@
+html, body {
+    touch-action: pan-y;
+    overflow: hidden;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background-color: #8bb4ff;
+    -webkit-user-select: none;
+    -ms-user-select: none; 
+    user-select: none; 
+}
+#renderCanvas {
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    -webkit-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none; 
+}
+#stats-div {
+    z-index: 199;
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    pointer-events: none;
+    touch-action: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#stats-text {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    height: 100%;
+    font-size: medium;
+    text-shadow: 0 0 5px #0000009c;
+}
+#loadingDiv {
+    z-index: 200;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #8bb4ff; 
+    background: -moz-linear-gradient(top, #8bb4ff 0%,#ff60f2 100%); 
+    background: -webkit-linear-gradient(top,  #8bb4ff 0%,#ff60f2 100%); 
+    background: linear-gradient(to bottom,  #8bb4ff 0%,#ff60f2 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FB7BA2', endColorstr='#FCE043',GradientType=0 );
+    touch-action: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#loadingText {
+    position: absolute;
+    color: white;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: x-small;
+
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    margin-top: 40px;
+    letter-spacing: 0.3rem;
+    touch-action: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@keyframes animText {
+    0% {
+        letter-spacing: 0.2rem;
+    }
+    100% {
+        letter-spacing: 0.4rem;
+    }
+}
+
+.loader {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+  }
+.loader::after,
+.loader::before {
+    content: '';  
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #FFF;
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: animloader 2s linear infinite;
+}
+.loader::after {
+    animation-delay: 1s;
+}
+  
+@keyframes animloader {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+}
+
+#customBT{
+    z-index: 199;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    color: white;
+    border-color: none;
+    width: 150px;
+    height: 150px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url("../resources/images/jump_icon.png");
+    background-size: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    border: none;
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Maintainer</title>
+    <link rel="icon" type="image/x-icon" href="Resources/Logo.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+	<link href="style.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script> 
+    <script src="https://assets.babylonjs.com/generated/Assets.js"></script> 
+    <script src="https://cdn.babylonjs.com/ammo.js"></script> 
+    <script src="https://cdn.babylonjs.com/cannon.js"></script> 
+    <script src="https://cdn.babylonjs.com/Oimo.js"></script> 
+    <script src="https://cdn.babylonjs.com/earcut.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/babylon.js"></script> 
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script> 
+    <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script> 
+    <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+    <script type="text/javascript" src="JS/Library.js"></script>
+    <script type="text/javascript" src="JS/element01.js"></script>
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <div class="container">
+            
+    <nav class="navbar navbar-expand-md bg-faded sticky-top">
+        <a class="navbar-brand" href="#"><img class="logo" src="Resources/Logo.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+               <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="w-100">
+           <div class="navbar-collapse collapse">
+               <ul class="navbar-nav ml-auto">
+                   <li class="nav-item">
+                       <a class="nav-link" href="index.html">Home</a>
+                   </li>
+                   <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="elementsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Elements
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="elementsDropdown">
+                        <a class="dropdown-item" href="element01.html">Element 1</a>
+                        <a class="dropdown-item" href="element02.html">Element 2</a>
+                        <a class="dropdown-item" href="element03.html">Element 3</a>
+                        <a class="dropdown-item" href="element04.html">Element 4</a>
+                        <a class="dropdown-item" href="element05.html">Element 5</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="game.html">Game</a>
+                </li>
+               </ul>
+           </div>
+        </div>
+    </nav>
+        </div>
+    </header>
+
+    <canvas class="gameWindow" id="renderCanvas"></canvas>
+
+    <script>
+            var canvas = document.getElementById("renderCanvas");
+            var engine = new BABYLON.Engine(canvas, true);
+            var scene = new BABYLON.Scene(engine);
+            var camera = new BABYLON.FreeCamera("camera", new BABYLON.Vector3(0, 5, -10), scene);
+            camera.setTarget(BABYLON.Vector3.Zero());
+            camera.attachControl(canvas, true);
+
+                var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+                light.intensity = 0.7;
+            var box = BABYLON.MeshBuilder.CreateBox("box", { size: 2 }, scene);
+            var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
+            var cylinder = BABYLON.MeshBuilder.CreateCylinder("cylinder", { height: 3, diameter: 1 }, scene);
+            cylinder.position.y = 1;
+            cylinder.position.x = -3;
+            sphere.position.y = 1;
+            sphere.position.x = 3;
+            box.position.y = 1;
+            var boxMaterial = new BABYLON.StandardMaterial("boxMaterial", scene);
+            boxMaterial.diffuseTexture = new BABYLON.Texture("Resources/Textures/box.jpg", scene);
+            box.material = boxMaterial;
+
+            var sphereMaterial = new BABYLON.StandardMaterial("sphereMaterial", scene);
+            sphereMaterial.diffuseTexture = new BABYLON.Texture("Resources/Textures/sphereTexture.jpg", scene);
+            sphere.material = sphereMaterial;
+
+            var cylinderMaterial = new BABYLON.StandardMaterial("cylinderMaterial", scene);
+            cylinderMaterial.diffuseTexture = new BABYLON.Texture("Resources/Textures/cylinderTexture.jpg", scene);
+            cylinder.material = cylinderMaterial;
+            var animationBox = new BABYLON.Animation("boxAnimation", "rotation.y", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+            var keysBox = [];
+            keysBox.push({ frame: 0, value: 0 });
+            keysBox.push({ frame: 100, value: Math.PI * 2 });
+            animationBox.setKeys(keysBox);
+            box.animations = [animationBox];
+            sphere.animations = [animationBox];
+            cylinder.animations = [animationBox];
+
+            var animationSphere = new BABYLON.Animation("sphereAnimation", "position.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+            var keysSphere = [];
+            keysSphere.push({ frame: 0, value: -3 });
+            keysSphere.push({ frame: 50, value: 3 });
+            keysSphere.push({ frame: 100, value: -3 });
+            animationSphere.setKeys(keysSphere);
+            sphere.animations = [animationSphere];
+
+            scene.registerBeforeRender(function () {
+            box.rotate(BABYLON.Axis.Y, 0.01, BABYLON.Space.LOCAL);
+            sphere.rotate(BABYLON.Axis.Y, 0.01, BABYLON.Space.LOCAL);
+            cylinder.rotate(BABYLON.Axis.Y, 0.01, BABYLON.Space.LOCAL);
+            });
+            var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 12, height: 6}, scene);
+            ground.receiveShadows = true;
+            engine.runRenderLoop(function () {
+            scene.render();
+            });
+
+            window.addEventListener("resize", function () {
+            engine.resize();
+            });
+    </script>
+
+</body>
